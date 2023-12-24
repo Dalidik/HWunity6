@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class EllenScript : MonoBehaviour
+public  class EllenScript : MonoBehaviour
 
 {
     public float movementSpeed = 2.0f;
@@ -20,8 +21,9 @@ public class EllenScript : MonoBehaviour
     float rotationAngle = 0.0f;
     float targetAnimationSpeed = 0.0f;
     bool isSprint = false;
-    bool isDead = false;
+      bool isDead = false;
     bool isSpawn = true;
+    bool Ragdoll = false;
     
 
     float speedY = 0.0f;
@@ -129,8 +131,14 @@ public class EllenScript : MonoBehaviour
             CharacterAnimator.SetTrigger("Death");
             isDead = true;
         }
-       
-        if(Input.GetMouseButtonDown(0))
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            
+            isDead = true;
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             int random = Random.Range(1, 4);
             CharacterAnimator.SetInteger("Combo", random);
@@ -139,8 +147,11 @@ public class EllenScript : MonoBehaviour
            
         }
     }
-    
 
+    private void OnTriggerEnter(Collider other)
+    {
+        isDead = true;
+    }
     public void MeleeAttackStart()
     {
 
